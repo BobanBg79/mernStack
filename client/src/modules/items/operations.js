@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const getItems = () => async dispatch => {
   dispatch(actions.setItemsLoading);
+  console.log(1);
   try {
     const { data } = await axios.get('/api/items');
     dispatch(actions.getItems(data));

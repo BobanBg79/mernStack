@@ -3,7 +3,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const itemsRouter = require('./routes/api/items');
 //establish connection with mongo database
-require('./db/mongoose');
+// require('./db/mongoose');
+const mongoose = require('mongoose');
+const db = require('./config/keys').mongoURI;
+//Connect to Mongo
+mongoose
+  .connect(db)
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.log(err));
+
 // create server instance
 const app = express();
 //Bodyparser Middleware

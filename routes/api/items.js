@@ -7,6 +7,7 @@ const Item = require('../../models/Item');
 //  @desc     get all items
 //  @access   public
 router.get('/', (req, res) => {
+  console.log(1, 'stigao na rutu');
   Item.find()
     .sort({ date: -1 })
     .then(items => res.json(items));

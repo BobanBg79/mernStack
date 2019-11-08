@@ -12,7 +12,6 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import { itemOperations } from '../modules/items';
-import uuid from 'uuid';
 
 class ItemModal extends Component {
   state = {

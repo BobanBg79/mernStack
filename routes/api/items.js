@@ -6,14 +6,13 @@ const Item = require('../../models/Item');
 //  @route    GET api/items
 //  @desc     get all items
 //  @access   public
-router.get('/', (req, res) => {
-  console.log(1, 'stigao na rutu');
+router.get('', (req, res) => {
   Item.find()
     .sort({ date: -1 })
     .then(items => res.json(items));
 });
 
-//  @route    POST api/items
+//  @route    POST api/items/add
 //  @desc     create an item
 //  @access   public
 router.post('/add', async (req, res) => {

@@ -3,15 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const itemsRouter = require('./routes/api/items');
 //establish connection with mongo database
-// require('./db/mongoose');
-const mongoose = require('mongoose');
-const db = require('./config/keys').mongoURI;
-//Connect to Mongo
-mongoose
-  .connect(db)
-  .then(() => console.log('Connected to the database'))
-  .catch(err => console.log(err));
-
+require('./db/mongoose');
 // create server instance
 const app = express();
 //Bodyparser Middleware
@@ -19,9 +11,9 @@ app.use(bodyParser.json());
 // Add item routes
 app.use('/api/items', itemsRouter);
 
+//Use static index.html page for Heroku deployment
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
-  console.log(111);
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });

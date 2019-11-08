@@ -1,13 +1,12 @@
 const path = require('path');
 const express = require('express');
-const bodyParser = require('body-parser');
 const itemsRouter = require('./routes/api/items');
 //establish connection with mongo database
 require('./db/mongoose');
 // create server instance
 const app = express();
-//Bodyparser Middleware
-app.use(bodyParser.json());
+//json parser Middleware
+app.use(express.json());
 // Add item routes
 app.use('/api/items', itemsRouter);
 

@@ -1,0 +1,34 @@
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+const ProtectedRoute = ({ component: Component, token, loading, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => {
+      if (!token) {
+        return (
+          <Redirect
+            to={{ pathname: '/login', state: { from: props.location } }}
+          />
+        )
+      }
+      if (loading) {
+        console.log(111)
+        return (
+          <div>
+            <h1>Loading</h1>
+          </div>
+        )
+      }
+      return <Component {...props} />
+    }}
+  />
+)
+
+const mapState = state => {
+  const { token, loading } = state.auth
+  return { token, loading }
+}
+
+export default connect(mapState)(ProtectedRoute)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { itemOperations } from '../modules/items';
 
@@ -17,6 +18,7 @@ class ShoppingList extends Component {
     const { items, loading } = this.props;
     return (
       <Container>
+        <Link to="/anotherpage">Link to another page</Link>
         <ListGroup>
           <TransitionGroup className="shopping-list">
             {items.map(({ _id, name }) => (
@@ -51,7 +53,4 @@ const mapDispatch = {
   deleteItem: itemOperations.deleteItem,
 };
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ShoppingList);
+export default connect(mapState, mapDispatch)(ShoppingList);

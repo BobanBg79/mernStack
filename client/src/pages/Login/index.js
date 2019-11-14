@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { authOperations } from '../../modules/auth';
 
 class Login extends Component {
   state = {
@@ -8,13 +10,22 @@ class Login extends Component {
     password: '',
   };
 
+  componentDidUpdate() {
+    if (this.props.token) {
+      console.log('success end, navigate');
+      this.props.history.push('/');
+    }
+  }
+
   handleTextChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('submit: ', e);
+    const { email, password } = this.state;
+    console.log('start');
+    this.props.login({ email, password });
   };
 
   render() {
@@ -53,4 +64,13 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapState = state => {
+  const { token } = state.auth;
+  return { token };
+};
+
+const mapDispatch = {
+  login: authOperations.login,
+};
+
+export default connect(mapState, mapDispatch)(Login);

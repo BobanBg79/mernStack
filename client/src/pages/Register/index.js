@@ -10,6 +10,12 @@ class Register extends Component {
     password: '',
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.token) {
+      this.props.history.push('/');
+    }
+  }
+
   handleTextChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
   };
@@ -23,7 +29,6 @@ class Register extends Component {
 
   render() {
     const { email, password, name } = this.state;
-
     return (
       <Container>
         <Form onSubmit={this.handleSubmit}>
@@ -70,8 +75,8 @@ class Register extends Component {
 }
 
 const mapState = state => {
-  const { loading } = state.auth;
-  return { loading };
+  const { loading, token } = state.auth;
+  return { loading, token };
 };
 
 const mapDispatch = {

@@ -1,7 +1,15 @@
 import types from './types';
 
-const showMessage = payload => ({
-  type: types.SHOW_MESSAGE,
+const showSuccessMessage = payload => ({
+  type: types.SHOW_SUCCESS_MESSAGE,
+  payload,
+});
+const showWarningMessage = payload => ({
+  type: types.SHOW_WARNING_MESSAGE,
+  payload,
+});
+const showErrorMessage = payload => ({
+  type: types.SHOW_ERROR_MESSAGE,
   payload,
 });
 const clearMessage = () => ({
@@ -9,6 +17,8 @@ const clearMessage = () => ({
 });
 
 export default {
-  showMessage,
+  showSuccessMessage,
+  showWarningMessage,
+  showErrorMessage,
   clearMessage,
 };

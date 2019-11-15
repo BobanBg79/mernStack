@@ -14,7 +14,7 @@ const displayMessageAndClear = (message, type) => async dispatch => {
     default:
       break;
   }
-  setTimeout(() => dispatch(messageActions.clearMessage()), 3000);
+  setTimeout(() => dispatch(messageActions.clearMessage()), 2500);
 };
 
 export default {

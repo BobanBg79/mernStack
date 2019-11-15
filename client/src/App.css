@@ -4,3 +4,8 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

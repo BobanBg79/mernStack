@@ -30,22 +30,15 @@ const AppNavbar = ({ token, user, logout }) => {
             <NavItem>
               <NavLink href="https://www.google.com">External link</NavLink>
             </NavItem>
-            {token && (
-              <NavItem>
-                <NavLink href="#" onClick={logout}>
-                  Logout
-                </NavLink>
-              </NavItem>
-            )}
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                My Account
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
+                <DropdownItem>Reset</DropdownItem>
                 <DropdownItem>Option 2</DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+                {token && <DropdownItem onClick={logout}>Logout</DropdownItem>}
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

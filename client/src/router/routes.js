@@ -1,4 +1,10 @@
-import { LoginPage, RegisterPage, AnotherPage } from '../pages';
+import {
+  LoginPage,
+  RegisterPage,
+  HomePage,
+  AnotherPage,
+  ApartmentCreatePage,
+} from '../pages';
 import { ShoppingList } from '../components';
 
 export const PUBLIC_ROUTES = {
@@ -7,7 +13,17 @@ export const PUBLIC_ROUTES = {
 };
 
 export const PROTECTED_ROUTES = {
-  SHOPPING_LIST: { title: 'Shopping list', path: '/', component: ShoppingList },
+  HOME: { title: 'Home page', path: '/', component: HomePage },
+  APARTMENT_CREATE: {
+    title: 'Create apartment',
+    path: '/apartments/create',
+    component: ApartmentCreatePage,
+  },
+  SHOPPING_LIST: {
+    title: 'Shopping list',
+    path: '/shopping-list',
+    component: ShoppingList,
+  },
   ANOTHER_PAGE: {
     title: 'Another page',
     path: '/anotherpage',

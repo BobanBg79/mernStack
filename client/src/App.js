@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Message, AppNavbar } from './components';
+import { Container } from 'reactstrap';
 import Router from './router';
 import store from './store';
 import { authOperations } from './modules/auth';
@@ -15,7 +16,9 @@ function App() {
       <Fragment>
         <AppNavbar />
         <Message />
-        <Router />
+        <Container>
+          <Router />
+        </Container>
       </Fragment>
     </Provider>
   );

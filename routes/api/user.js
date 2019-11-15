@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 
 //  @route    POST api/user/register
-//  @desc     user sign up
+//  @desc     user register (sign up)
 //  @access   public
 router.post('/register', async (req, res) => {
   const user = new User(req.body);
@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
 });
 
 //  @route    GET api/user/auth
-//  @desc     attempt to authenticate userbased on token
+//  @desc     attempt to authenticate user based on token
 //  @access   protected
 router.get('/auth', auth, async (req, res) => {
   res.send(req.user);

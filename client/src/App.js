@@ -6,7 +6,7 @@ import { Container } from 'reactstrap';
 import Router from './router';
 import store from './store';
 import { authOperations } from './modules/auth';
-import './App.css';
+import './App.scss';
 
 store.dispatch(authOperations.authenticateUser());
 

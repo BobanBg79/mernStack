@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import {
   Collapse,
   Navbar,
@@ -37,8 +37,12 @@ const AppNavbar = ({ token, user, logout }) => {
               <DropdownMenu right>
                 <DropdownItem>Reset</DropdownItem>
                 <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                {token && <DropdownItem onClick={logout}>Logout</DropdownItem>}
+                {token && (
+                  <Fragment>
+                    <DropdownItem divider />
+                    <DropdownItem onClick={logout}>Logout</DropdownItem>
+                  </Fragment>
+                )}
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

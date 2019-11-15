@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
-import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import {
+  Container,
+  Form,
+  FormGroup,
+  FormFeedback,
+  FormText,
+  Label,
+  Input,
+  Button,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authOperations } from '../../modules/auth';
+import validator from 'validator';
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
-    passwirdInputType: 'password',
+    passwordInputType: 'password',
+    valid: undefined,
   };
 
   componentDidUpdate() {
@@ -20,7 +31,7 @@ class Login extends Component {
   showPassword = () => {};
 
   handleTextChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+    this.setState({ [target.name]: target.value, valid: true });
   };
 
   handleSubmit = e => {
@@ -30,7 +41,7 @@ class Login extends Component {
   };
 
   render() {
-    const { email, password, passwirdInputType } = this.state;
+    const { email, password, passwordInputType, valid } = this.state;
 
     return (
       <Container>
@@ -44,12 +55,17 @@ class Login extends Component {
               value={email}
               onChange={this.handleTextChange}
               className="input"
+              valid={valid}
             />
+            <FormFeedback valid={valid}>
+              You will not be able to see this
+            </FormFeedback>
+            <FormText>Example help text that remains unchanged.</FormText>
           </FormGroup>
           <FormGroup>
             <Label for="password">Password</Label>
             <Input
-              type={passwirdInputType}
+              type={passwordInputType}
               id="password"
               name="password"
               value={password}

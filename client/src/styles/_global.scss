@@ -1,0 +1,12 @@
+#message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border: 2x solid $borderColor;
+}

@@ -10,3 +10,13 @@
   padding-bottom: 1rem;
   border: 2x solid $borderColor;
 }
+
+.form-wrapper {
+  margin: 0 auto;
+  max-width: 600px;
+  box-shadow: 0 0 8px #e4e4e4;
+  padding: 75px 50px;
+}
+.form-title {
+  margin-bottom: 1rem;
+}

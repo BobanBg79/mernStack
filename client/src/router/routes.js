@@ -1,6 +1,5 @@
 import {
   LoginPage,
-  RegisterPage,
   HomePage,
   AnotherPage,
   ApartmentCreatePage,
@@ -9,7 +8,7 @@ import { ShoppingList } from '../components';
 
 export const PUBLIC_ROUTES = {
   LOGIN: { title: 'Login', path: '/login', component: LoginPage },
-  REGISTER: { title: 'Register', path: '/register', component: RegisterPage },
+  REGISTER: { title: 'Register', path: '/register', component: LoginPage },
 };
 
 export const PROTECTED_ROUTES = {

@@ -6,6 +6,11 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
+    case types.GET_ALL_APARTMENTS:
+      return {
+        ...state,
+        apartments: payload,
+      };
     case types.APARTMENT_CREATE_SUCCESS:
       return {
         ...state,

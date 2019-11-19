@@ -13,7 +13,7 @@ app.use(express.json());
 // Add item routes
 app.use('/api/items', itemsRouter);
 app.use('/api/user', userRouter);
-app.use('/api/apartment', apartmentRouter);
+app.use('/api/apartments', apartmentRouter);
 
 //Use static index.html page for Heroku deployment
 if (process.env.NODE_ENV === 'production') {

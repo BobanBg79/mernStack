@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
-import { apartmentOperations } from '../modules/apartment';
-import { apartmentStatus } from '../constants';
+import { apartmentOperations } from '../../modules/apartment';
 
-class ApartmentCreate extends Component {
+class ApartmentSingle extends Component {
   state = {
     name: '',
     capacity: '',
-    status: apartmentStatus[1],
   };
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    if (id) {
+      this.props.getExistingApartment(id);
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     // if (this.props.token) {
@@ -24,15 +29,16 @@ class ApartmentCreate extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { createApartment } = this.props;
-    const { name, capacity, status } = this.state;
-    createApartment({ name, capacity, status });
+    const { name, capacity } = this.state;
+    createApartment({ name, capacity });
   };
 
   render() {
-    const { name, capacity, status } = this.state;
+    const { name, capacity } = this.state;
     return (
       <Container>
         <Form onSubmit={this.handleSubmit}>
+          <h1 className="h1">Create apartment</h1>
           <FormGroup>
             <Label for="name">Apartment name</Label>
             <Input
@@ -53,35 +59,19 @@ class ApartmentCreate extends Component {
               onChange={this.handleTextChange}
             />
           </FormGroup>
-          <FormGroup>
-            <Label for="status">Status</Label>
-            <Input
-              type="select"
-              name="status"
-              id="status"
-              value={status}
-              onChange={this.handleTextChange}
-            >
-              {apartmentStatus.map(status => (
-                <option>{status}</option>
-              ))}
-            </Input>
-          </FormGroup>
           <Button>Submit</Button>
-          {this.props.loading && (
-            <div>
-              <h1>Loading...</h1>
-            </div>
-          )}
         </Form>
       </Container>
     );
   }
 }
 
-const mapState = state => {};
+const mapState = state => {
+  return {};
+};
 const mapDispatch = {
   createApartment: apartmentOperations.createApartment,
+  getExistingApartment: apartmentOperations.getExistingApartment,
 };
 
-export default connect(mapState, mapDispatch)(ApartmentCreate);
+export default connect(mapState, mapDispatch)(ApartmentSingle);

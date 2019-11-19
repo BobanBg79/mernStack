@@ -9,7 +9,7 @@ const HomePage = () => {
         <Link to="/shopping-list">Shopping list</Link>
       </ListGroupItem>
       <ListGroupItem>
-        <Link to="/shopping-list">Make reservation</Link>
+        <Link to="/apartments">Apartments</Link>
       </ListGroupItem>
       <ListGroupItem>
         <Link to="/apartments/create">Create apartment</Link>

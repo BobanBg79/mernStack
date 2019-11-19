@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 
 //  @route    POST api/user/register
-//  @desc     user register (sign up)
+//  @desc     user register (sign up) create user
 //  @access   public
 router.post('/register', async (req, res) => {
   const user = new User(req.body);
@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
     const token = await user.generateAuthToken();
     res.send({ user, token });
   } catch (err) {
-    res.status(400).send({ message: err.message });
+    res.status(400).send({ error: 'Failed to login' });
   }
 });
 

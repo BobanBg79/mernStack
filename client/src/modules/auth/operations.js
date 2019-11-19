@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Http from '../../utils/Http';
 import authActions from './actions';
 import { messageOperations } from '../message';
 
@@ -7,12 +7,7 @@ const authenticateUser = () => async dispatch => {
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(authActions.authAttempt());
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.get('/api/user/auth', config);
+      const response = await Http.get('/api/user/auth');
       dispatch(authActions.authSuccess(response.data));
       dispatch(
         messageOperations.displayMessageAndClear(
@@ -29,7 +24,7 @@ const authenticateUser = () => async dispatch => {
 const registerUser = data => async dispatch => {
   dispatch(authActions.registerAttempt());
   try {
-    const response = await axios.post('api/user/register', data);
+    const response = await Http.post('api/user/register', data);
     dispatch(authActions.registerSuccess(response.data));
     dispatch(
       messageOperations.displayMessageAndClear(
@@ -39,14 +34,16 @@ const registerUser = data => async dispatch => {
     );
   } catch (err) {
     dispatch(authActions.registerFail());
-    dispatch(messageOperations.displayMessageAndClear(err, 'error'));
+    dispatch(
+      messageOperations.displayMessageAndClear(err.response.data.error, 'error')
+    );
   }
 };
 
 const login = data => async dispatch => {
   dispatch(authActions.loginAttempt());
   try {
-    const response = await axios.post('/api/user/login', data);
+    const response = await Http.post('/api/user/login', data);
     dispatch(authActions.loginSuccess(response.data));
     dispatch(
       messageOperations.displayMessageAndClear(
@@ -57,32 +54,21 @@ const login = data => async dispatch => {
   } catch (err) {
     dispatch(authActions.loginFail());
     dispatch(
-      messageOperations.displayMessageAndClear(
-        err.response.data.message,
-        'error'
-      )
+      messageOperations.displayMessageAndClear(err.response.data.error, 'error')
     );
   }
 };
 
 const logout = () => async dispatch => {
   try {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      await axios.post('/api/user/logout', null, config);
-      dispatch(authActions.logoutSuccess());
-      dispatch(
-        messageOperations.displayMessageAndClear(
-          'Successfully logged out',
-          'success'
-        )
-      );
-    }
+    await Http.post('/api/user/logout');
+    dispatch(authActions.logoutSuccess());
+    dispatch(
+      messageOperations.displayMessageAndClear(
+        'Successfully logged out',
+        'success'
+      )
+    );
   } catch ({ response }) {
     dispatch(
       messageOperations.displayMessageAndClear(response.data.error, 'error')

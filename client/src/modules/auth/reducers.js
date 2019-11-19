@@ -1,7 +1,8 @@
 import types from './types';
+import { getToken, setToken, removeToken } from '../../utils/token';
 
 const INITIAL_STATE = {
-  token: localStorage.getItem('token'),
+  token: getToken(),
   isAuthenticated: false,
   user: null,
   loading: false,
@@ -22,7 +23,7 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
         loading: false,
       };
     case types.AUTH_FAIL:
-      localStorage.removeItem('token');
+      removeToken();
       return {
         ...state,
         token: null,
@@ -31,7 +32,7 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
         loading: false,
       };
     case types.LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.token);
+      setToken(payload.token);
       return {
         ...state,
         token: payload.token,
@@ -48,7 +49,7 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
         loading: false,
       };
     case types.REGISTER_SUCCESS:
-      localStorage.setItem('token', payload.token);
+      setToken(payload.token);
       return {
         ...state,
         token: payload.token,
@@ -62,7 +63,7 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
         loading: false,
       };
     case types.LOGOUT_SUCCESS:
-      localStorage.removeItem('token');
+      removeToken();
       return {
         ...state,
         token: null,

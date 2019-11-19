@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Http from '../../utils/Http';
 import { apartmentActions } from './index';
 
 const getExistingApartment = id => async dispatch => {
@@ -22,7 +21,7 @@ const createApartment = data => async dispatch => {
 
 const getAllApartments = () => async dispatch => {
   try {
-    const response = await Http.get('/api/apartments');
+    const response = await axios.get('/api/apartments');
     dispatch(apartmentActions.getAllApartments(response.data));
   } catch (err) {
     console.log('getAllApartments error: ', err.response);

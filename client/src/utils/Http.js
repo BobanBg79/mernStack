@@ -1,14 +1,23 @@
 import axios from 'axios';
 import { getToken } from '../utils/token';
-// const token = localStorage.getItem('token');
-// axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+import { authOperations } from '../modules/auth';
 
-axios.interceptors.request.use(config => {
-  const token = getToken();
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`;
-  }
-  return config;
-});
+const configureAxios = store => {
+  axios.interceptors.request.use(config => {
+    const token = getToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  });
 
-export default axios;
+  axios.interceptors.response.use(
+    response => response,
+    error => {
+      console.log('axios response interceptor error: ', error.response);
+      store.dispatch(authOperations.logout());
+    }
+  );
+};
+
+export default configureAxios;

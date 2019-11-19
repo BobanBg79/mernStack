@@ -1,4 +1,5 @@
-import Http from '../../utils/Http';
+// import Http from '../../utils/Http';
+import axios from 'axios';
 import authActions from './actions';
 import { messageOperations } from '../message';
 
@@ -7,7 +8,7 @@ const authenticateUser = () => async dispatch => {
     const token = localStorage.getItem('token');
     if (token) {
       dispatch(authActions.authAttempt());
-      const response = await Http.get('/api/user/auth');
+      const response = await axios.get('/api/user/auth');
       dispatch(authActions.authSuccess(response.data));
       dispatch(
         messageOperations.displayMessageAndClear(
@@ -24,7 +25,7 @@ const authenticateUser = () => async dispatch => {
 const registerUser = data => async dispatch => {
   dispatch(authActions.registerAttempt());
   try {
-    const response = await Http.post('api/user/register', data);
+    const response = await axios.post('api/user/register', data);
     dispatch(authActions.registerSuccess(response.data));
     dispatch(
       messageOperations.displayMessageAndClear(
@@ -43,7 +44,7 @@ const registerUser = data => async dispatch => {
 const login = data => async dispatch => {
   dispatch(authActions.loginAttempt());
   try {
-    const response = await Http.post('/api/user/login', data);
+    const response = await axios.post('/api/user/login', data);
     dispatch(authActions.loginSuccess(response.data));
     dispatch(
       messageOperations.displayMessageAndClear(
@@ -61,14 +62,10 @@ const login = data => async dispatch => {
 
 const logout = () => async dispatch => {
   try {
-    await Http.post('/api/user/logout');
+    // await Http.post('/api/user/logout');
+    delete axios.defaults.headers.common.Authorization;
     dispatch(authActions.logoutSuccess());
-    dispatch(
-      messageOperations.displayMessageAndClear(
-        'Successfully logged out',
-        'success'
-      )
-    );
+    dispatch(messageOperations.displayMessageAndClear('Logged out', 'success'));
   } catch ({ response }) {
     dispatch(
       messageOperations.displayMessageAndClear(response.data.error, 'error')

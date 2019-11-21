@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/token';
 import { authOperations } from '../modules/auth';
+import { msgOperations } from '..//modules/message';
 
 const configureAxios = store => {
   axios.interceptors.request.use(config => {
@@ -14,8 +15,13 @@ const configureAxios = store => {
   axios.interceptors.response.use(
     response => response,
     error => {
-      console.log('axios response interceptor error: ', error.response);
-      store.dispatch(authOperations.logout());
+      if (error.response.status === 401) {
+        store.dispatch(
+          msgOperations.showMsg(error.response.data.error, 'error')
+        );
+        store.dispatch(authOperations.logout());
+      }
+      throw error;
     }
   );
 };

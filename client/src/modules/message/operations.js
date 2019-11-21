@@ -1,6 +1,6 @@
 import messageActions from './actions';
 
-const displayMessageAndClear = (message, type) => async dispatch => {
+const showMsg = (message, type) => async dispatch => {
   switch (type) {
     case 'success':
       dispatch(messageActions.showSuccessMessage(message));
@@ -18,5 +18,5 @@ const displayMessageAndClear = (message, type) => async dispatch => {
 };
 
 export default {
-  displayMessageAndClear,
+  showMsg,
 };

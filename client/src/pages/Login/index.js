@@ -22,7 +22,8 @@ class Login extends Component {
     email: '',
     password: '',
     passwordInputType: 'password',
-    invalid: false,
+    invalidEmail: false,
+    invalidPassword: false,
   };
 
   componentDidMount() {
@@ -31,6 +32,10 @@ class Login extends Component {
     ReactDOM.findDOMNode(this.emailField).addEventListener(
       'blur',
       this.validateEmail
+    );
+    ReactDOM.findDOMNode(this.passwordField).addEventListener(
+      'blur',
+      this.validatePassword
     );
   }
 
@@ -45,15 +50,23 @@ class Login extends Component {
       'blur',
       this.validateEmail
     );
+    ReactDOM.findDOMNode(this.passwordField).removeEventListener(
+      'blur',
+      this.validatePassword
+    );
   }
 
   validateEmail = () => {
     const { email } = this.state;
-    if (email) {
-      this.setState({ invalid: !validator.isEmail(email) });
-    } else {
-      this.setState({ invalid: false });
-    }
+    this.setState({ invalidEmail: !validator.isEmail(email) });
+    return !validator.isEmail(email);
+  };
+  validatePassword = () => {
+    const { password } = this.state;
+    this.setState({
+      invalidPassword: !validator.isLength(password, { min: 7 }),
+    });
+    return !validator.isLength(password, { min: 7 });
   };
 
   togglePasswordVisibility = () => {
@@ -64,15 +77,22 @@ class Login extends Component {
   };
 
   handleTextChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+    this.setState({
+      [target.name]: target.value,
+    });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { loginForm, name, email, password } = this.state;
-    const { login, registerUser } = this.props;
-    if (loginForm) return login({ email, password });
-    return registerUser({ email, password, name });
+    const invalidEmail = this.validateEmail();
+    const invalidPassword = this.validatePassword();
+
+    if (!invalidEmail && !invalidPassword) {
+      const { loginForm, name, email, password } = this.state;
+      const { login, registerUser } = this.props;
+      if (loginForm) return login({ email, password });
+      return registerUser({ email, password, name });
+    }
   };
 
   render() {
@@ -82,7 +102,8 @@ class Login extends Component {
       email,
       password,
       passwordInputType,
-      invalid,
+      invalidEmail,
+      invalidPassword,
     } = this.state;
     return (
       <Container>
@@ -111,7 +132,7 @@ class Login extends Component {
                 value={email}
                 onChange={this.handleTextChange}
                 className="input"
-                invalid={invalid}
+                invalid={invalidEmail}
               />
               <FormFeedback>
                 Please enter email in the right format
@@ -120,11 +141,13 @@ class Login extends Component {
             <FormGroup id="password_form_group">
               <Label for="password">Password</Label>
               <Input
+                ref={el => (this.passwordField = el)}
                 type={passwordInputType}
                 id="password"
                 name="password"
                 value={password}
                 onChange={this.handleTextChange}
+                invalid={invalidPassword}
               />
               <Button
                 color="link"
@@ -133,20 +156,28 @@ class Login extends Component {
               >
                 {passwordInputType === 'password' ? <FaEye /> : <FaEyeSlash />}
               </Button>
+              <FormFeedback>
+                Please enter password of the right length
+              </FormFeedback>
+              <FormText>Password must be at least 7 characters long</FormText>
             </FormGroup>
 
-            {loginForm ? (
-              <FormGroup>
-                <FormText>Don't have accout?</FormText>
-                <Link to="/register">Create your account</Link>{' '}
-              </FormGroup>
-            ) : (
-              <FormGroup>
-                <FormText>You already have an account?</FormText>
-                <Link to="/login">Log in</Link>
-              </FormGroup>
-            )}
-            <Button color="primary">Submit</Button>
+            <div className="my-4">
+              {loginForm ? (
+                <FormGroup>
+                  <FormText>Don't have accout?</FormText>
+                  <Link to="/register">Create your account</Link>{' '}
+                </FormGroup>
+              ) : (
+                <FormGroup>
+                  <FormText>You already have an account?</FormText>
+                  <Link to="/login">Log in</Link>
+                </FormGroup>
+              )}
+            </div>
+            <Button color="primary" className="w-50">
+              Submit
+            </Button>
           </Form>
         </div>
       </Container>

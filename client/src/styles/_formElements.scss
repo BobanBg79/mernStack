@@ -1,1 +1,5 @@
-
+#password {
+  &.form-control.is-invalid {
+    background-position: center right calc(0.375em + 1.875rem);
+  }
+}

@@ -8,5 +8,5 @@ export default combineReducers({
   item: itemsReducer,
   auth: authReducer,
   messages: messageReducer,
-  apartment: apartmentReducer,
+  apartments: apartmentReducer,
 });

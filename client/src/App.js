@@ -7,8 +7,8 @@ import { authOperations } from './modules/auth';
 import configureAxios from './utils/Http';
 import './App.scss';
 
-store.dispatch(authOperations.authenticateUser());
 configureAxios(store);
+store.dispatch(authOperations.authenticateUser());
 
 function App() {
   return (

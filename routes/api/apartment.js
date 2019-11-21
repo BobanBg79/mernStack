@@ -19,7 +19,17 @@ router.get('/', auth, async (req, res) => {
 //  @desc     get single apartment from db
 //  @access   protected
 router.get('/:id', auth, async (req, res) => {
-  console.log('apartment id: ', req.params);
+  try {
+    const apartment = await Apartment.findById(req.params.id);
+    if (!apartment) {
+      return res
+        .status(404)
+        .send(`No apartment with the id: ${req.params.id} found in database`);
+    }
+    res.send(apartment);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 //  @route    POST api/apartments/create
 //  @desc     create new apartment

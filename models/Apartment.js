@@ -7,8 +7,9 @@ const apartmentSchema = new Schema(
       required: true,
       ref: 'User',
     },
-    name: {
+    apartment_name: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },

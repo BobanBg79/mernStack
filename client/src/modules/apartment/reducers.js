@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-    case types.GET_ALL_APARTMENTS:
+    case types.GET_ALL_APARTMENTS_SUCCESS:
       return {
         ...state,
         apartmentsList: payload,
@@ -31,12 +31,12 @@ const reducer = (state = INITIAL_STATE, { type, payload }) => {
         single: payload,
         edit: payload,
       };
-    case types.START_REQUEST:
+    case types.START_APARTMENT_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case types.STOP_REQUEST:
+    case types.STOP_APARTMENT_REQUEST:
       return {
         ...state,
         loading: false,

@@ -15,16 +15,16 @@ const getSingleApartment = payload => ({
 });
 
 const getAllApartments = payload => ({
-  type: types.GET_ALL_APARTMENTS,
+  type: types.GET_ALL_APARTMENTS_SUCCESS,
   payload,
 });
 
 const startRequest = () => ({
-  type: types.START_REQUEST,
+  type: types.START_APARTMENT_REQUEST,
 });
 
 const stopRequest = () => ({
-  type: types.STOP_REQUEST,
+  type: types.STOP_APARTMENT_REQUEST,
 });
 
 export default {

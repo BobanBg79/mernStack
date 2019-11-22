@@ -12,10 +12,20 @@ const apartmentSchema = new Schema(
       unique: true,
       required: true,
       trim: true,
+      validate(value) {
+        if (!value) {
+          throw new Error('Apartment name cannot be empty');
+        }
+      },
     },
     capacity: {
       type: Number,
       required: true,
+      validate(value) {
+        if (!value) {
+          throw new Error('Capacity field is required');
+        }
+      },
     },
     status: {
       type: String,
@@ -26,6 +36,14 @@ const apartmentSchema = new Schema(
     timestamps: true,
   }
 );
+
+apartmentSchema.post('save', function(error, doc, next) {
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new Error('There was a duplicate key error'));
+  } else {
+    next();
+  }
+});
 
 const Apartment = mongoose.model('Apartment', apartmentSchema);
 module.exports = Apartment;

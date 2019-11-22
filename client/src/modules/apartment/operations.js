@@ -5,8 +5,8 @@ const getAllApartments = () => async dispatch => {
   try {
     dispatch(apartmentActions.startRequest());
     const response = await axios.get('/api/apartments');
-    dispatch(apartmentActions.stopRequest());
     dispatch(apartmentActions.getAllApartments(response.data));
+    dispatch(apartmentActions.stopRequest());
   } catch (err) {
     dispatch(apartmentActions.stopRequest());
   }

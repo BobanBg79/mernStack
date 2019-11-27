@@ -37,9 +37,25 @@ const apartmentSchema = new Schema(
   }
 );
 
+apartmentSchema.pre('save', function(next) {
+  const apartment = this;
+  console.log(90, 'apartment: ', apartment);
+  next();
+});
+
 apartmentSchema.post('save', function(error, doc, next) {
+  console.log(99, error.errors);
   if (error.name === 'MongoError' && error.code === 11000) {
-    next(new Error('There was a duplicate key error'));
+    next(new Error('Apartment name needs to be unique'));
+  } else if (error.name === 'ValidationError') {
+    const errorMessages = [];
+    Object.keys(error.errors).forEach(singleError => {
+      errorMessages.push(
+        error.errors[singleError].message.replace('Path', 'Field')
+      );
+    });
+
+    next(new Error(errorMessages));
   } else {
     next();
   }

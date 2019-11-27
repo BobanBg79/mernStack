@@ -18,6 +18,7 @@ const getSingleApartment = id => async dispatch => {
     dispatch(apartmentActions.getSingleApartment(response.data));
   } catch (err) {
     console.log('GRESKA: ', err.response.data);
+    console.log('GRESKA2: ', err.message);
   }
 };
 

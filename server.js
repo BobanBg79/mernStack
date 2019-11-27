@@ -10,7 +10,7 @@ require('./db/mongoose');
 const app = express();
 //json parser Middleware
 app.use(express.json());
-// Add item routes
+// Add routers
 app.use('/api/items', itemsRouter);
 app.use('/api/user', userRouter);
 app.use('/api/apartments', apartmentRouter);
@@ -22,6 +22,10 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+app.use((err, req, res, next) => {
+  res.status(500).send(err.message);
+});
 
 // create port
 const port = process.env.PORT || 5000;

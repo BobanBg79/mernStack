@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { apartmentActions } from './index';
+import { msgOperations } from '../message';
 
 const getAllApartments = () => async dispatch => {
   try {
@@ -8,6 +9,7 @@ const getAllApartments = () => async dispatch => {
     dispatch(apartmentActions.getAllApartments(response.data));
     dispatch(apartmentActions.stopRequest());
   } catch (err) {
+    dispatch(msgOperations.showMsg(err.response.data, 'error'));
     dispatch(apartmentActions.stopRequest());
   }
 };

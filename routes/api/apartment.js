@@ -6,7 +6,7 @@ const Apartment = require('../../models/Apartment');
 //  @route    GET api/apartments
 //  @desc     get all apartments from db
 //  @access   protected
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, async (req, res, next) => {
   try {
     const apartments = await Apartment.find();
     res.send(apartments);

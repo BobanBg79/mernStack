@@ -23,6 +23,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.use((req, res, next) => {
+  res.status(404).send('Sorry, this route cannot be found!');
+});
+
 // create port
 const port = process.env.PORT || 5000;
 

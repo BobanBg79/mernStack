@@ -40,7 +40,7 @@ router.post('/create', auth, async (req, res) => {
     await apartment.save();
     res.status(201).send(apartment);
   } catch (err) {
-    console.log(1, err.message);
+    console.log('route: ', err.message);
     res.status(400).send(err.message);
   }
 });
